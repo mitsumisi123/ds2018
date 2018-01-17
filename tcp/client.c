@@ -5,8 +5,12 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
+#include <unistd.h>
+#include <ctype.h>
+
 
 int main(int argc, char* argv[]) {
+	
     int so;
     char s[100];
     struct sockaddr_in ad;
@@ -16,29 +20,49 @@ int main(int argc, char* argv[]) {
 
     // create socket
     int serv = socket(AF_INET, SOCK_STREAM, 0);
-
+	
     // init address
     hep = gethostbyname(argv[1]);
+
     memset(&ad, 0, sizeof(ad));
     ad.sin_family = AF_INET;
     ad.sin_addr = *(struct in_addr *)hep->h_addr_list[0];
     ad.sin_port = htons(12345);
+    
 
     // connect to server
     connect(serv, (struct sockaddr *)&ad, ad_length);
-
+    
     while (1) {
-        // after connected, it's client turn to chat
+        
+    	FILE *f;
+    	char buffer[512];
+    	int words = 0;
+    	char c;
+     	f=fopen("labwork1.txt","r");
+    	while((c=getc(f))!=EOF)			
+	{	
+		fscanf(f , "%s" , buffer);
+		if(isspace(c)||c=='\t')
+		words++;	
+	}
+	
+       
+      
+	write(serv, &words, sizeof(int));
+     	rewind(f);
+      
+        char ch ;
+      	while(ch != EOF)
+      	{
+		fscanf(f , "%s" , buffer);
+		write(serv,buffer,512);
+		ch = fgetc(f);
+      	}
 
-        // send some data to server
-        printf("client>");
-        scanf("%s", s);
-        write(serv, s, strlen(s) + 1);
-
-        // then it's server turn
-        read(serv, s, sizeof(s));
-
-        printf("server says: %s\n", s);
+	printf("The file was sent successfully");
+	close(serv);
+	return 0;
     }
-}
 
+}
