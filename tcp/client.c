@@ -39,8 +39,9 @@ int main(int argc, char* argv[]) {
     	char buffer[512];
     	int words = 0;
     	char c;
-     	f=fopen("labwork1.txt","r");
-    	while((c=getc(f))!=EOF)			
+     	f=fopen("labwork1.txt","r");               //open file labwork
+	
+    	while((c=getc(f))!=EOF)			   // read file from computer
 	{	
 		fscanf(f , "%s" , buffer);
 		if(isspace(c)||c=='\t')
@@ -49,10 +50,10 @@ int main(int argc, char* argv[]) {
 	
        
       
-	write(serv, &words, sizeof(int));
+	write(serv, &words, sizeof(int));           
      	rewind(f);
       
-        char ch ;
+        char ch ;                                       //write file was read
       	while(ch != EOF)
       	{
 		fscanf(f , "%s" , buffer);
