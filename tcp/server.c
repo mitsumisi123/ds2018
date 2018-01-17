@@ -38,11 +38,11 @@ int main() {
             	FILE *fp;
          	int ch = 0;
 		char buffer[512];
-           	fp = fopen("labwork1_recv.txt","a");            
+           	fp = fopen("labwork1_recv.txt","a");            		//open (create file name labwork1_recv.txt) 
             	int words;
-		read(cli, &words, sizeof(int));
+		read(cli, &words, sizeof(int));					//read from client
             	
-          	while(ch != words)
+          	while(ch != words)						// write data to file labwork1_recv.txt
        	   	{
         	 	read(cli ,buffer, 512); 
 	   	 	fprintf(fp , " %s" , buffer);   
