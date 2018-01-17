@@ -1,0 +1,71 @@
+1.Protocol
+  String char buffer[] share between client and server
+2.oganization
+ -server
+   + create socket
+   + bind to port
+   + listen to client
+   + connect to client
+   + read and write file which is sent from client.
+
+ -client
+   +create socket
+   +connect to server port
+   + read file from computer and write in buffer[] ,send to server
+3. code snippet
+
+    *server
+	-read and write file which is sent from client.  
+
+	FILE *fp;
+         	int ch = 0;
+		char buffer[512];
+           	fp = fopen("labwork1_recv.txt","a");            		//open (create file name labwork1_recv.txt) 
+            	int words;
+		read(cli, &words, sizeof(int));					//read from client
+            	
+          	while(ch != words)						// write data to file labwork1_recv.txt
+       	   	{
+        	 	read(cli ,buffer, 512); 
+	   	 	fprintf(fp , " %s" , buffer);   
+		 	
+		 	ch++;
+	   	}
+
+
+
+	*client
+	-read file from computer and write in buffer[] ,send to server
+	FILE *f;
+    	char buffer[512];
+    	int words = 0;
+    	char c;
+     	f=fopen("labwork1.txt","r");               //open file labwork
+	
+    	while((c=getc(f))!=EOF)			   // read file from computer
+	{	
+		fscanf(f , "%s" , buffer);
+		if(isspace(c)||c=='\t')
+		words++;	
+	}
+	
+       
+      
+	write(serv, &words, sizeof(int));           
+     	rewind(f);
+      
+        char ch ;                                       //write file was read
+      	while(ch != EOF)
+      	{
+		fscanf(f , "%s" , buffer);
+		write(serv,buffer,512);
+		ch = fgetc(f);
+      	}
+
+ 4. Who does what?
+
+    Minh and Tung:
+	- read file from computer and write in buffer[] ,send to server
+    Hung and Son:
+	-read and write file which is sent from client
+	-Finish report
