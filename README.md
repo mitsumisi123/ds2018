@@ -10,6 +10,8 @@ Groups are expected to:
 Group Info
 =======================
 
-* Name 1 (ID1)
-* Name 2 (ID2)
+* PhamDuyMinh(USTHBI6-100)
+* DangVuSonTUng(USTHBI6-145)
+* NguyenHongSon((USTHBI6-128)
+* BuiBietHung((USTHBI6-058)
 
