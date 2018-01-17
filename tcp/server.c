@@ -6,7 +6,7 @@
 #include <netdb.h>
 #include <unistd.h>
 int main() {
-	printf("[+]Server Socket Created Sucessfully.\n");
+	
     int ss, cli, pid;
     struct sockaddr_in ad;
     char s[100];
@@ -41,12 +41,12 @@ int main() {
            	fp = fopen("labwork1_recv.txt","a");            
             	int words;
 		read(cli, &words, sizeof(int));
-            	//printf("Passed integer is : %d\n" , words);      //Ignore , Line for Testing
+            	
           	while(ch != words)
        	   	{
         	 	read(cli ,buffer, 512); 
 	   	 	fprintf(fp , " %s" , buffer);   
-		 	//printf(" %s %d "  , buffer , ch); //Line for Testing , Ignore
+		 	
 		 	ch++;
 	   	}
      		printf("The file was received successfully\n");
@@ -56,7 +56,7 @@ int main() {
         }
         else {
             // I'm the father, continue the loop to accept more clients
-		printf("HI");
+		
             continue;
         }
 	// disconnect
