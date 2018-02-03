@@ -1,0 +1,41 @@
+1.We choose hadoop framework because it allows distributed processing of large datasets across clusters of computers using simple programming models.
+2.Mapper
+	-split file into words and group each word with 1
+-snippet
+
+public static class Map
+       extends Mapper<Object, Text, Text, IntWritable>{
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+    public void map(Object key, Text value, Context context
+                    ) throws IOException, InterruptedException {
+      StringTokenizer itr = new StringTokenizer(value.toString());
+      while (itr.hasMoreTokens()) {  //divide text file into word and 
+        word.set(itr.nextToken());    
+        context.write(word, one);    // add feature 1 to each word
+      }
+    }
+  }
+
+Reducer:
+	combine group of all same word and each same word that are combined, will increase number of this word by 1
+
+public static class Reduce
+       extends Reducer<Text,IntWritable,Text,IntWritable> {
+    private IntWritable result = new IntWritable();
+    public void reduce(Text key, Iterable<IntWritable> values,
+                       Context context
+                       ) throws IOException, InterruptedException {
+      int sum = 0;
+      for (IntWritable val : values) {   //increate sum for each same word
+        sum += val.get();              
+      }
+      result.set(sum);
+      context.write(key, result);           //write word and number of time it appears
+    }
+  } 
+
+3.Who does what
+Minh and Hung : class for Mapper and Reducer
+Son: Drive to implement mapreduce
+Tung: report
